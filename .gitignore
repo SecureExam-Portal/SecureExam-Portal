@@ -1,27 +1,121 @@
-# Environment Variables
+# ==========================================
+# Environment Variables & Secrets
+# ==========================================
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.*
+!.env.example
+!.env.sample
 
-# Node modules
+# ==========================================
+# Node.js (Frontend & Backend)
+# ==========================================
 node_modules/
-
-# Logs
-logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# Production / Build outputs
+dist/
+dist-ssr/
+build/
+out/
+.next/
+*.tsbuildinfo
+
+# ==========================================
+# Python (AI Proctoring)
+# ==========================================
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Distribution / packaging
+develop-eggs/
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+parts/
+var/
+sdist/
+wheels/
+*.manifest
+*.spec
+
+# Jupyter Notebook & Testing caches
+.ipynb_checkpoints
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# ==========================================
+# Media, Models, & AI Data Caches
+# ==========================================
+# Weights, models & heavy test recordings
+*.h5
+*.onnx
+*.pt
+*.pth
+*.tflite
+*.weights
+recordings/
+proctoring_logs/
+proctoring_snapshots/
+
+# Temporary / Scratch directories
+scratch/
+tmp/
+temp/
+
+# ==========================================
+# Logs & Databases
+# ==========================================
+logs/
+*.log
+*.sqlite
+*.sqlite3
+*.db
+
+# ==========================================
+# Operating System & IDE Artifacts
+# ==========================================
+# OS Files
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDE & Editors
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.sublime-project
+*.sublime-workspace
+*.sw?
+*.swo
+*.swn
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
-*.sw?
