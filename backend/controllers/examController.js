@@ -1,4 +1,4 @@
-const Exam = require("../models/Exam");
+const Exam = require("../models/exam");
 const Question = require("../models/Question");
 const Result = require("../models/Result");
 const crypto = require("crypto");
