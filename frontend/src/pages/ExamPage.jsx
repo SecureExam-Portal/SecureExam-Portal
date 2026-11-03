@@ -1,10 +1,12 @@
 
 import { useCallback, useState } from "react";
+
 import ExamHeader from "../components/exam/ExamHeader";
 import QuestionCard from "../components/exam/QuestionCard";
 import Timer from "../components/exam/Timer";
 import SubmitButton from "../components/exam/SubmitButton";
-import ViolationPanel from "../components/exam/ViolationPanel";
+import WebcamMonitor from "../components/exam/WebcamMonitor";
+import ProctoringAlerts from "../components/exam/ProctoringAlerts";
 
 const sampleQuestions = [
   {
@@ -54,6 +56,7 @@ function ExamPage() {
     if (isSubmitted) return;
 
     const unanswered = questions.length - answeredCount;
+
     const message =
       unanswered > 0
         ? `You have ${unanswered} unanswered question(s). Submit anyway?`
@@ -160,43 +163,9 @@ function ExamPage() {
               onTimeUp={handleSubmit}
             />
 
-            <section className="rounded-xl border border-slate-200 bg-white p-4">
-              <h2 className="font-semibold text-slate-900">
-                Question Navigator
-              </h2>
+            <WebcamMonitor />
 
-              <div className="mt-3 grid grid-cols-5 gap-2">
-                {questions.map((question, index) => {
-                  const isAnswered = Boolean(answers[question.id]);
-                  const isCurrent = index === currentIndex;
-
-                  return (
-                    <button
-                      key={question.id}
-                      type="button"
-                      onClick={() => setCurrentIndex(index)}
-                      aria-label={`Go to question ${index + 1}`}
-                      aria-current={isCurrent ? "step" : undefined}
-                      className={`h-10 rounded-lg border text-sm font-semibold ${
-                        isCurrent
-                          ? "border-blue-900 bg-blue-900 text-white"
-                          : isAnswered
-                            ? "border-green-300 bg-green-50 text-green-800"
-                            : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
-                      }`}
-                    >
-                      {index + 1}
-                    </button>
-                  );
-                })}
-              </div>
-
-              <p className="mt-3 text-xs text-slate-500">
-                Blue: current · Green: answered · White: unanswered
-              </p>
-            </section>
-
-            <ViolationPanel violations={violations} />
+            <ProctoringAlerts alerts={violations} />
 
             <SubmitButton
               onClick={confirmSubmit}
