@@ -1,4 +1,4 @@
-const Exam = require("../models/exam");
+const Exam = require("../models/Exam");
 const Question = require("../models/Question");
 const Result = require("../models/Result");
 const crypto = require("crypto");
@@ -357,6 +357,52 @@ const deleteExam = async (req, res) => {
   }
 };
 
+// JOIN EXAM VIA CODE
+const joinExamByCode = async (req, res) => {
+  try {
+    const { examCode } = req.body;
+    if (!examCode) {
+      return res.status(400).json({ message: "Exam code is required" });
+    }
+
+    const cleanCode = examCode.trim().toUpperCase();
+    const exam = await Exam.findOne({ examCode: cleanCode });
+
+    if (!exam) {
+      return res.status(404).json({ message: "Invalid exam code. No exam found." });
+    }
+
+    // Check attempts if student already attempted
+    const existingAttempts = await Result.countDocuments({
+      student: req.user._id,
+      exam: exam._id,
+    });
+
+    const allowedAttempts = exam.allowReattempt ? exam.maxAttempts : 1;
+    if (existingAttempts >= allowedAttempts) {
+      return res.status(400).json({
+        message: `You have reached the maximum allowed attempts (${allowedAttempts}) for this exam.`,
+        exam,
+      });
+    }
+
+    res.status(200).json({
+      message: "Exam code verified successfully",
+      examId: exam._id,
+      exam: {
+        _id: exam._id,
+        title: exam.title,
+        description: exam.description,
+        duration: exam.duration,
+        allowReattempt: exam.allowReattempt,
+        maxAttempts: exam.maxAttempts,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 module.exports = {
   createExam,
   getExams,
@@ -366,4 +412,5 @@ module.exports = {
   submitExam,
   updateExam,
   deleteExam,
+  joinExamByCode,
 };
