@@ -9,6 +9,7 @@ const {
   submitExam,
   updateExam,
   deleteExam,
+  joinExamByCode,
 } = require("../controllers/examController");
 
 const {
@@ -17,6 +18,13 @@ const {
 } = require("../middleware/authMiddleware");
 
 const router = express.Router();
+
+// JOIN EXAM VIA EXAM CODE
+router.post(
+  "/join",
+  protect,
+  joinExamByCode
+);
 
 
 // CREATE EXAM
